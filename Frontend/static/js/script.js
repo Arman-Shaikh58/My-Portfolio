@@ -99,23 +99,39 @@ document.addEventListener('mousemove', (e) => {
 });
 
 // Typing animation for name
-function typeName() {
-    const nameElement = document.getElementById('my-name');
-    if (!nameElement) return;
-    
-    const name = "Arman Shaikh";
-    let i = 0;
-    
-    function type() {
-        if (i < name.length) {
-            nameElement.textContent += name.charAt(i);
-            i++;
-            setTimeout(type, 100);
-        }
+const texts = ["Developer", "Arman", "A Student", "A Learner"];
+let textIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+
+function typeText() {
+    const span = document.getElementById('my-name');
+    const currentText = texts[textIndex];
+
+    if (isDeleting) {
+        span.textContent = currentText.substring(0, charIndex - 1);
+        charIndex--;
+    } else {
+        span.textContent = currentText.substring(0, charIndex + 1);
+        charIndex++;
     }
-    
-    type();
+
+    let typingSpeed = isDeleting ? 50 : 100;
+
+    if (!isDeleting && charIndex === currentText.length) {
+        typingSpeed = 1000; // Pause before deleting
+        isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+        isDeleting = false;
+        textIndex = (textIndex + 1) % texts.length;
+        typingSpeed = 500; // Pause before typing next
+    }
+
+    setTimeout(typeText, typingSpeed);
 }
+
+document.addEventListener("DOMContentLoaded", typeText);
+
 
 // Initialize typing animation
 document.addEventListener('DOMContentLoaded', typeName);
