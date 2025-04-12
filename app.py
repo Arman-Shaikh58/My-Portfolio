@@ -1,10 +1,13 @@
-from flask import Flask, render_template, request, flash, redirect, url_for, jsonify
+from flask import Flask, render_template, request, flash, redirect, url_for, jsonify,send_from_directory
 from flask_mail import Mail, Message
 import threading
 import logging
 from dotenv import load_dotenv
 import os
-
+documents=[
+        {"id":2360581,"fname":"AISSMS.pdf"},
+        {"id":2360512,"fname":"Event.jpg"}
+    ]
 # Load environment variables
 load_dotenv()
 
@@ -54,6 +57,11 @@ def home():
         return redirect(url_for("home"))
 
     return render_template("index.html")
+
+@app.route('/achivements/<int:id>')
+def get_achive(id):
+    pdf=next(item for item in documents if item["id"]==id)
+    return send_from_directory('Frontend/static/files',pdf['fname'],as_attachment=False)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
