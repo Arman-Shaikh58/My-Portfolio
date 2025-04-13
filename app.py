@@ -8,8 +8,7 @@ documents=[
         {"id":2360581,"fname":"AISSMS.pdf"},
         {"id":2360512,"fname":"Event.jpg"},
         {"id":2360513,"fname":"PJC.pdf"},
-        {"id":2360514,"fname":"SCC.pdf"},
-
+        {"id":2360514,"fname":"SCC.pdf"}
     ]
 # Load environment variables
 load_dotenv()
